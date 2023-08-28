@@ -117,11 +117,17 @@ ndk::ScopedAStatus Power::isModeSupported(Mode type, bool* _aidl_return) {
     }
 #endif
     switch (type) {
+        case Mode::EXPENSIVE_RENDERING:
+            if (is_expensive_rendering_supported()) {
+                *_aidl_return = true;
+            } else {
+                *_aidl_return = false;
+            }
+            break;
 #ifdef TAP_TO_WAKE_NODE
         case Mode::DOUBLE_TAP_TO_WAKE:
 #endif
         case Mode::LAUNCH:
-        case Mode::EXPENSIVE_RENDERING:
         case Mode::INTERACTIVE:
         case Mode::SUSTAINED_PERFORMANCE:
         case Mode::FIXED_PERFORMANCE:
